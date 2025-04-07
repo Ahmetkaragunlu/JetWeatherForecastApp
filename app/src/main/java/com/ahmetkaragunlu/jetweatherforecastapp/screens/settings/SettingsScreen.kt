@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ahmetkaragunlu.jetweatherforecastapp.model.WeatherUnit
+import com.ahmetkaragunlu.jetweatherforecastapp.navigation.WeatherScreens
 import com.ahmetkaragunlu.jetweatherforecastapp.widgets.WeatherAppBar
 
 
@@ -35,13 +36,16 @@ import com.ahmetkaragunlu.jetweatherforecastapp.widgets.WeatherAppBar
 fun SettingsScreen(navController: NavController,
                    settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
-    var unitToggleState by remember { mutableStateOf(false) }
     val measurementUnits = listOf("Imperial (F)", "Metric (C)")
     val choiceFromDb = settingsViewModel.unitList.collectAsState().value
 
     val defaultChoice = if (choiceFromDb.isNullOrEmpty()) measurementUnits[0]
     else choiceFromDb[0].units
 
+    // Initialize unitToggleState based on the database value
+    var unitToggleState by remember {
+        mutableStateOf(defaultChoice == "Imperial (F)")
+    }
     var choiceState by remember {
         mutableStateOf(defaultChoice)
     }
@@ -65,16 +69,15 @@ fun SettingsScreen(navController: NavController,
                     modifier = Modifier.padding(bottom = 15.dp)
                 )
 
-                IconToggleButton(checked = !unitToggleState ,
+                IconToggleButton( checked = unitToggleState,
                     onCheckedChange = {
-                        unitToggleState = !it
+                        unitToggleState = it
                         choiceState = if (unitToggleState) {
                             "Imperial (F)"
                         } else {
                             "Metric (C)"
                         }
                         Log.d("TAG", "MainContent: $unitToggleState")
-
                     }, modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .clip(shape = RectangleShape)
@@ -88,6 +91,7 @@ fun SettingsScreen(navController: NavController,
                 Button(onClick = {
                     settingsViewModel.deleteAllUnits()
                     settingsViewModel.insertUnit(WeatherUnit(units = choiceState ))
+                    navController.navigateUp()
 
                 },
                     modifier = Modifier

@@ -82,6 +82,7 @@ fun MainScreen(
 fun MainScaffold(
     weather: Weather, navController: NavController, isImperial: Boolean
 ) {
+
     Scaffold(topBar = {
         WeatherAppBar(title = "${weather.city.name}, ${weather.city.country}",
             navController = navController,
@@ -104,13 +105,12 @@ fun MainContent(data: Weather, isImperial: Boolean, paddingValues: PaddingValues
 
     Column(
         Modifier
-            .padding(paddingValues)  // Scaffold'dan gelen padding'i kullan
+            .padding(paddingValues)
             .padding(4.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Geri kalan kod aynı...
 
         Text(text = formatDate(weatherItem.dt), // Wed Nov 30
             style = MaterialTheme.typography.labelLarge,
