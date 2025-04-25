@@ -1,3 +1,5 @@
+
+[logo](https://github.com/Ahmetkaragunlu/JetWeatherForecastApp/blob/main/app.png?raw=true)
 A modern Android weather application built with Jetpack Compose, providing real-time and 7-day forecasts for cities around the world. Users can search for any city, view current and weekly weather data, and save favorite locations for quick access. The app is built using MVVM architecture, Room Database, Retrofit, and Dependency Injection via Hilt.
 
 🔧 Technologies Used
